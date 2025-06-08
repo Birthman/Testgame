@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Token Reward</title>
+</head>
+<body>
+  <h1>Claim Your Reward</h1>
+  <form id="rewardForm">
+    <input name="destination" placeholder="Your XRPL Wallet" required><br>
+    <input name="amount" type="number" placeholder="Amount" required><br>
+    <button type="submit">Claim Reward</button>
+  </form>
+  <div id="response"></div>
+
+  <script>
+    document.getElementById("rewardForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+      
+      const response = await fetch("/reward", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const result = await response.json();
+      document.getElementById("response").innerText = JSON.stringify(result, null, 2);
+    });
+  </script>
+</body>
+</html>
